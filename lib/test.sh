@@ -2,16 +2,9 @@
 
 set -e
 
-PG_USER='postgres'
-UNAME_STR=`uname`
-if [[ "$UNAME_STR" == 'Darwin' ]]; then
-    PG_USER=`whoami`
-    echo "Using user '${PG_USER}' for postgres"
-fi
-
 export TEST_RDB_DIRECTORY=`mktemp -d 2>/dev/null || mktemp -d -t 'indradb'`
 export RUST_BACKTRACE=1
-export TEST_POSTGRES_URL="postgres://${PG_USER}@localhost:5432/indradb_test"
+export TEST_POSTGRES_URL="postgres://postgres@postgres:5432/indradb_test"
 
 ACTION=test
 
@@ -30,7 +23,6 @@ function cleanup {
 mkdir -p $TEST_RDB_DIRECTORY
 trap cleanup EXIT
 
-dropdb --if-exists indradb_test
-createdb --owner=$PG_USER indradb_test
-cargo update
+dropdb -U postgres -h postgres --if-exists indradb_test
+createdb -U postgres -h postgres --owner=postgres indradb_test
 cargo $ACTION --all-features $TEST_NAME

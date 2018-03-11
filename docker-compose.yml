@@ -1,0 +1,9 @@
+test:
+  build: .
+  dockerfile: Dockerfile
+  volumes:
+    - .:/app
+  links:
+    - postgres
+postgres:
+  image: postgres
