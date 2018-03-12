@@ -87,6 +87,6 @@ If you don't want to use the pre-built releases, you can build/install from sour
 
 ## Running tests
 
-Use `./test.sh` to run the test suite. Note that this will run the full test suite across the entire workspace, including tests for all datastore implementations. You'll need to have postgres running, since the postgres datastore depends on it.
+Use `./test.sh` to run the test suite. Note that this will run the full test suite across the entire workspace, including tests for all datastore implementations. You'll need to have docker running.
 
 You can filter which tests run via the `TEST_NAME` environment variable. e.g. `TEST_NAME=create_vertex ./test.sh` will run tests with `create_vertex` in the name across all datastore implementations.
